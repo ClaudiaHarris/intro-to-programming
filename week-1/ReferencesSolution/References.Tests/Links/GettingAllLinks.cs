@@ -1,3 +1,4 @@
+﻿
 using Alba;
 
 namespace References.Tests.Links;
@@ -6,12 +7,11 @@ public class GettingAllLinks
 {
 
     [Fact]
-
     public async Task GettingLinksReturnsA200Ok()
     {
 
-        //GET /links
-        var host = await Albahost.For<Program>();
+        // GET /links
+        var host = await AlbaHost.For<Program>();
 
         await host.Scenario(api =>
         {
@@ -19,5 +19,4 @@ public class GettingAllLinks
             api.StatusCodeShouldBeOk();
         });
     }
-
 }

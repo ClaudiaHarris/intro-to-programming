@@ -1,10 +1,10 @@
 ﻿
-
+using NSubstitute;
 namespace StringCalculator;
 public class CalculatorTests
     
 {
-    private Calculator _calculator = new();
+    private Calculator _calculator = new(Substitute.For<ILogger>);
 
     [Fact]
     public void EmptyStringReturnsZero()
@@ -61,5 +61,26 @@ public class CalculatorTests
         var result = _calculator.Add(numbers);
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("1,2,3")]
+
+    public void DoesLogging(string numbers)
+    {
+        //Given
+        var mockedLogger = Substitute.For<ILogger>();
+        var calculator = new Calculator(mockedLogger);
+
+        //When
+        var response = calculator.Add(numbers);
+
+        //Then
+        //did the logger get called with the response
+
+        mockedLogger
+            .Received()
+            .Write(response.ToString());
+    }
+
 }
  

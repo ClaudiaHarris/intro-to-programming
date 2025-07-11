@@ -1,5 +1,7 @@
 ﻿
-public class Calculator
+
+
+public class Calculator(ILogger _logger)
 {
     public int Add(string numbers)
     {
@@ -18,11 +20,21 @@ public class Calculator
             numbers = numbers[4..];
         }
 
-        return numbers.Split([.. delimiters]) //string[]
+        var response = numbers.Split([.. delimiters]) //string[]
 
            
                 .Select(int.Parse) //makes int array
                 .Sum();
+        //log this sucker out
+
+        _logger.Write(response.ToString());
+        return response; 
 
     }
+
+    private bool HasCustomDelimeters(string numbers)
+    {
+        return numbers.StartsWith("//");
+    }
+
 }

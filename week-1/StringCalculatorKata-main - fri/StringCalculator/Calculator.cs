@@ -4,34 +4,35 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 public class Calculator
 {
     public int Add(string numbers)
+
     {
-        if (numbers == null || numbers.Length == 0)
+        List<char> delimeters = [',', '\n'];
+
+        if (numbers == "")
         {
             return 0;
         }
 
-
-
-
-
-        if (numbers.StartsWith("//"))
+        if (HasCustomDelimeters(numbers))
         {
-            char delimeter = numbers[2];
-
-
-            int number = numbers.Split(delimeter, '\n', ',')
-                 .Select(int.Parse)
-                 .Sum();
-
-            return number;
+            var delimeter = numbers[2];
+            delimeters.Add(delimeter);
+            numbers = numbers[4..];
         }
-        
-        int item = numbers.Split('\n', ',')
+
+
+
+
+        var response = numbers.Split([..delimeters])
               .Select(int.Parse)
               .Sum();
 
-        return item;
+        return response;
 
+    }
+    private bool HasCustomDelimeters(string numbers)
+    {
+        return numbers.StartsWith("//");
     }
 
 }
